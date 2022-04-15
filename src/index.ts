@@ -7,60 +7,14 @@ export interface WrappedStorage {
   get length(): number;
 }
 
+const isSSR = typeof window === "undefined";
+
 export function wrapLocalStorage(): WrappedStorage {
-  return wrapStorage(window.localStorage);
+  return isSSR ? createInmemoryStorage() : wrapStorage(window.localStorage);
 }
 
 export function wrapSessionStorage(): WrappedStorage {
-  return wrapStorage(window.sessionStorage);
-}
-
-function wrapStorage(storage: Storage): WrappedStorage {
-  let inmemoryStorage: { [key: string]: string } = {};
-  return {
-    get: (key) => {
-      if (!isSupported(storage)) {
-        return inmemoryStorage[key] ?? null;
-      } else {
-        return storage.getItem(key);
-      }
-    },
-    set: (key, value) => {
-      if (!isSupported(storage)) {
-        inmemoryStorage[key] = value;
-      } else {
-        storage.setItem(key, value);
-      }
-    },
-    remove: (key) => {
-      if (!isSupported(storage)) {
-        delete inmemoryStorage[key];
-      } else {
-        storage.removeItem(key);
-      }
-    },
-    clear: () => {
-      if (!isSupported(storage)) {
-        inmemoryStorage = {};
-      } else {
-        storage.clear();
-      }
-    },
-    key: (index) => {
-      if (!isSupported(storage)) {
-        return Object.keys(inmemoryStorage)[index] ?? null;
-      } else {
-        return storage.key(index);
-      }
-    },
-    get length() {
-      if (!isSupported(storage)) {
-        return Object.keys(inmemoryStorage).length;
-      } else {
-        return storage.length;
-      }
-    },
-  };
+  return isSSR ? createInmemoryStorage() : wrapStorage(window.sessionStorage);
 }
 
 function isSupported(storage: Storage) {
@@ -76,4 +30,76 @@ function isSupported(storage: Storage) {
   } catch (e) {
     return false;
   }
+}
+
+function wrapStorage(storage: Storage): WrappedStorage {
+  const inmemoryStorage = createInmemoryStorage();
+  return {
+    get: (key) => {
+      if (!isSupported(storage)) {
+        return inmemoryStorage.get(key);
+      } else {
+        return storage.getItem(key);
+      }
+    },
+    set: (key, value) => {
+      if (!isSupported(storage)) {
+        inmemoryStorage.set(key, value);
+      } else {
+        storage.setItem(key, value);
+      }
+    },
+    remove: (key) => {
+      if (!isSupported(storage)) {
+        inmemoryStorage.remove(key);
+      } else {
+        storage.removeItem(key);
+      }
+    },
+    clear: () => {
+      if (!isSupported(storage)) {
+        inmemoryStorage.clear();
+      } else {
+        storage.clear();
+      }
+    },
+    key: (index) => {
+      if (!isSupported(storage)) {
+        return inmemoryStorage.key(index);
+      } else {
+        return storage.key(index);
+      }
+    },
+    get length() {
+      if (!isSupported(storage)) {
+        return inmemoryStorage.length;
+      } else {
+        return storage.length;
+      }
+    },
+  };
+}
+
+function createInmemoryStorage(): WrappedStorage {
+  let storage: { [key: string]: string } = {};
+  return {
+    get: (key) => {
+      return storage[key] ?? null;
+    },
+    set: (key, value) => {
+      storage[key] = value;
+    },
+    remove: (key) => {
+      delete storage[key];
+    },
+    clear: () => {
+      storage = {};
+    },
+    key: (index) => {
+      return Object.keys(storage)[index] ?? null;
+    },
+    get length() {
+      return Object.keys(storage).length;
+    },
+  };
 }
