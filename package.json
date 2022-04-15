@@ -7,7 +7,7 @@
     "dst"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf dst && tsc"
   },
   "repository": {
     "type": "git",
