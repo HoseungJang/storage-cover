@@ -3,6 +3,10 @@ Web Storage might not work because its implementation(e.g. incognito mode) is di
 
 ```storage-cover``` is great solution for resolving this issue. ```storage-cover``` wraps Web Storage to prevent unexpected error and keep your web application continuous.
 
+- zero dependencies
+- easy to use
+- support SSR
+
 ```typescript
 import { wrapLocalStorage, wrapSessionStorage } from "storage-cover";
 
