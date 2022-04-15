@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/HoseungJang/storage-cover/issues"
   },
-  "homepage": "https://github.com/HoseungJang/storage-cover#readme"
+  "homepage": "https://github.com/HoseungJang/storage-cover#readme",
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
 }
