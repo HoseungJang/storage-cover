@@ -1,6 +1,6 @@
 {
   "name": "storage-cover",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "web storage wrapper for continuous web application in all browsers",
   "main": "./dst/index.js",
   "files": [
