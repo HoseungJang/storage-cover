@@ -2,7 +2,10 @@
   "name": "storage-cover",
   "version": "0.0.0",
   "description": "web storage wrapper for continuous web application in all browsers",
-  "main": "index.js",
+  "main": "./dst/index.js",
+  "files": [
+    "dst"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
