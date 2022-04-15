@@ -4,13 +4,13 @@ Web Storage might not work because its implementation(e.g. incognito mode) is di
 ```storage-cover``` is great solution for resolving this issue. ```storage-cover``` wraps Web Storage to prevent unexpected error and keep your web application continuous.
 
 ```typescript
-import StorageCover from "storage-cover";
+import { wrapLocalStorage, wrapSessionStorage } from "storage-cover";
 
-export const localStorage = StorageCover.createLocal();
-export const sessionStorage = StorageCover.createSession();
+export const localStorage = wrapLocalStorage();
+export const sessionStorage = wrapSessionStorage();
 ```
 
 ```typescript
-localStorage.set("SOME_KEY");
-console.log(localStorage.get(""));
+localStorage.set("SOME_KEY", "Hello, World!");
+console.log(localStorage.get("SOME_KEY")); // Hello, World!
 ```
