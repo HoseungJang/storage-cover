@@ -1,6 +1,6 @@
 {
   "name": "storage-cover",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "web storage wrapper for continuous web application in all browsers",
   "main": "./dst/index.js",
   "files": [
@@ -21,5 +21,14 @@
   "homepage": "https://github.com/HoseungJang/storage-cover#readme",
   "devDependencies": {
     "typescript": "^4.6.3"
-  }
+  },
+  "keywords": [
+    "WebStorage",
+    "web storage",
+    "local storage",
+    "session storage",
+    "localStorage",
+    "sessionStorage",
+    "storage"
+  ]
 }
