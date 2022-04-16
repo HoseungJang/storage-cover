@@ -17,21 +17,6 @@ export function wrapSessionStorage(): WrappedStorage {
   return isSSR ? createInmemoryStorage() : wrapStorage(window.sessionStorage);
 }
 
-function isSupported(storage: Storage) {
-  try {
-    const key = new Array(4)
-      .fill(null)
-      .map(() => Math.random().toString(36).slice(2))
-      .join("");
-    storage.setItem(key, key);
-    const result = storage.getItem(key) === key;
-    storage.removeItem(key);
-    return result;
-  } catch (e) {
-    return false;
-  }
-}
-
 export function wrapStorage(storage: Storage): WrappedStorage {
   const inmemoryStorage = createInmemoryStorage();
   return {
@@ -102,4 +87,19 @@ export function createInmemoryStorage(): WrappedStorage {
       return Object.keys(storage).length;
     },
   };
+}
+
+function isSupported(storage: Storage) {
+  try {
+    const key = new Array(4)
+      .fill(null)
+      .map(() => Math.random().toString(36).slice(2))
+      .join("");
+    storage.setItem(key, key);
+    const result = storage.getItem(key) === key;
+    storage.removeItem(key);
+    return result;
+  } catch (e) {
+    return false;
+  }
 }
