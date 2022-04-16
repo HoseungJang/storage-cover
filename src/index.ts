@@ -80,7 +80,7 @@ function wrapStorage(storage: Storage): WrappedStorage {
   };
 }
 
-function createInmemoryStorage(): WrappedStorage {
+export function createInmemoryStorage(): WrappedStorage {
   let storage: { [key: string]: string } = {};
   return {
     get: (key) => {
