@@ -32,7 +32,7 @@ function isSupported(storage: Storage) {
   }
 }
 
-function wrapStorage(storage: Storage): WrappedStorage {
+export function wrapStorage(storage: Storage): WrappedStorage {
   const inmemoryStorage = createInmemoryStorage();
   return {
     get: (key) => {
