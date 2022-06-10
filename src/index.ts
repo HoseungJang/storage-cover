@@ -72,7 +72,7 @@ export function createInmemoryStorage(): WrappedStorage {
       return storage[key] ?? null;
     },
     set: (key, value) => {
-      storage[key] = value;
+      storage[key] = typeof value === 'string' ? value : JSON.stringify(value);
     },
     remove: (key) => {
       delete storage[key];
